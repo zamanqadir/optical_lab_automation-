@@ -46,11 +46,11 @@ enter_prescription={
     }
 frame_data={
         "form_supply_frame": "",
-        "form_later_frame" : "",
+        "form_later_frame" : "Frame to Come",
         "form_uncut_frame" : "",
-        "Frame_Options" : "",
-        "form_enclosed" :"",
-    }
+        "Frame_Options" : "Zyl Edge",
+        "form_enclosed" :"False",
+}
 
 frames_catalog_data={
         "select":{
@@ -110,13 +110,13 @@ def fetch_data():
 
 def prepar_dict(requested_data):
     for request in requested_data:
-        for key ,value in requested_data.items():
+        for key ,value in request.items():
             if key =="client_name":
                 patient_information["form_name"]=value
             elif key =="Lens Type":
                 prescription_type["form_single_vision"]=value
             elif key =="OD - SPH":
-                enter_prescription.get("right_eye")["form_sph_rt"]=value   
+                enter_prescription.get("right_eye")["form_sph_rt"]=value 
             elif key =="OD - CYL":
                 enter_prescription.get("right_eye")["form_cyl_rt"]=value 
             elif key =="OD - Axis":
@@ -126,15 +126,26 @@ def prepar_dict(requested_data):
             elif key =="OD - PD (Near)":
                 enter_prescription.get("right_eye")["form_near_rt"]=value     
             elif key =="OS - SPH":
-                enter_prescription.get("right_eye")["form_sph_lt"]=value   
+                enter_prescription.get("left_eye")["form_sph_lt"]=value   
             elif key =="OS - CYL":
-                enter_prescription.get("right_eye")["form_cyl_lt"]=value 
+                enter_prescription.get("left_eye")["form_cyl_lt"]=value 
             elif key =="OS - Axis":
-                enter_prescription.get("right_eye")["form_axis_lt"]=value    
+                enter_prescription.get("left_eye")["form_axis_lt"]=value    
             elif key =="OS - PD (Distance)":
-                enter_prescription.get("right_eye")["form_far_lt"]=value 
+                enter_prescription.get("left_eye")["form_far_lt"]=value 
             elif key =="OS - PD (Near)":
-                enter_prescription.get("right_eye")["form_near_lt"]=value  
+                enter_prescription.get("left_eye")["form_near_lt"]=value
+            elif key =="Model":
+                enter_prescription["form_frame_model"]=value    
+            elif key =="Color":
+                enter_prescription["form_frame_color"]=value 
+            elif key =="Frame Size - A":
+                enter_prescription["form_eye_size_a"]=value
+            elif key =="Frame Size - B":
+                enter_prescription["form_eye_size_b"]=value    
+            elif key =="DBL":
+                enter_prescription["form_frame_dbl"]=value 
+            elif key =="ED":
+                enter_prescription["form_frame_ed"]=value
             elif key =="Notes":
                 comment["comment"]=value        
-
