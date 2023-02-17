@@ -9,8 +9,6 @@ import configuration
 import prepare_data
 
 
-# dr
-
 def initialise():
     options = Options()
     options.add_experimental_option("detach" , True)
@@ -102,17 +100,22 @@ def fill_out_enter_prescription(enter_prescription,driver):
 def fill_right_eye(right_eye_data , driver):
 
      for key ,value in right_eye_data.items():
+        print("key" , key , "value", value)
         form_rkey=driver.find_element(By.ID, key)
-        if form_rkey:
+        if form_rkey and value is not None:
             form_rkey.send_keys(value)          
-
+        else:
+            print("field not found")
 
 def fill_left_eye(left_eye_data,driver):
 
     for key ,value in left_eye_data.items():
         form_lkey=driver.find_element(By.ID, key)
-        if form_lkey:
+        print("key" , key , "value", value)
+        if form_lkey and value is not None:
             form_lkey.send_keys(value)
+        else:
+            print("field not found")    
     
 def fill_out_frame_data(frame_data,driver):
     
@@ -208,7 +211,7 @@ def fill_out_email(email ,driver):
      email_field=driver.find_element(By.ID, 'email2')
      if email_field:
          email_field.send_keys(email)
-         add_button_click(driver)
+        #  add_button_click(driver)
 
 def add_button_click(driver):
     email=driver.find_element(By.ID, 'email2').get_attribute("value")
@@ -224,6 +227,8 @@ def main():
     driver=initialise()
     login(driver)
     go_to_lab_job(driver)
+    print("---------------------")
+    print(prepare_data.enter_prescription)
     fill_out_patient_information(prepare_data.patient_information , driver)
     fill_out_prescription_type(prepare_data.prescription_type,driver)
     fill_out_enter_prescription(prepare_data.enter_prescription,driver)
@@ -234,8 +239,7 @@ def main():
     fill_lens_colors_coatings_info(prepare_data.lens_colors_coatings ,driver)
     fill_out_comments(prepare_data.comment,driver)
     
-   
-    # email="null@yopmail.com"
-    # review_button_click(email,driver)
+    email="null@yopmail.com"
+    review_button_click(email,driver)
 
 main()    
