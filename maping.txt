@@ -1,0 +1,74 @@
+patient_information
+Name: client_name
+Tray NO: (optional)
+redo: 
+redo_type:
+redo_reason:
+
+prescription_type
+single_vision: Lens Type 
+form_multifocals: Lens Type
+form_progressives": Lens Type
+form_freeform: Lens Type
+
+enter_prescription
+Choose RX Side: 
+Right Eye
+    SPH:OD - SPH
+    Cyl:OD - CYL
+    Axis:OD - Axis
+    ADD:  
+    Seg/O.C HT: 
+    prism1_rt:
+    Prism
+    prism3_rt:
+    PD Distance:OD - PD (Distance)
+    PD Near:OD - PD (Near)
+Left Eye
+    SPH:OS - SPH
+    Cyl:OS - CYL
+    Axis:OS - Axis
+    ADD:
+    Seg/O.C HT: 
+    prism1_rt:
+    Prism
+    prism3_rt:
+    PD Distance:OS - PD (Distance)
+    PD Near:OS - PD (Near) 
+ 
+Frame Data
+    Frame Data: Frame to Come
+    Frame Option: always with Zyl Edge
+    Lenses Enclosed: False
+
+select From KMARS Frames Catalog  
+Frame Name/Model:    
+Color: 
+Eye size(A): Frame Size - A (Not confirm)
+        (B): Frame Size - B (Not confirm)
+DBL: Frame Size - DBL
+ED: Frame Size - ED
+
+Lens Material
+  Lens Material:Material
+
+Lens Colors & Coatings
+Uncoated/No Tint:
+AR: Coatings 
+Photochromic/Transitions:
+Tint:
+Tint Color:
+Grade:
+Polarized:
+AR Side:
+HC/Scratch coat:
+Mirror:
+  color:
+  grade:
+
+Comments:Notes
+
+
+
+
+

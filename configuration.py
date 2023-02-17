@@ -1,0 +1,5 @@
+initial_link="https://shop.kmarsoptical.com/index.php?route=account/login"
+admin_email="1777"
+admin_password="vision1777"
+notion_token="secret_IbUSvkZYJ1eH9E9ED4SPFhWhpaGzedVRgu1PLNCXSzg"
+databaseId="a8d9694e86ad446ea8c6acf859519f4c"
