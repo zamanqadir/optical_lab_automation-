@@ -16,6 +16,7 @@ import time
 def initialise():
     options = Options()
     options.add_experimental_option("detach" , True)
+    options.add_argument("--headless")
     driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
     driver.get(configuration.initial_link)
     driver.maximize_window()
@@ -261,7 +262,7 @@ def main():
     fill_lens_colors_coatings_info(prepare_data.lens_colors_coatings ,driver)
     fill_out_comments(prepare_data.comment,driver)
     
-    email="null@yopmail.com"
-    review_button_click(email,driver)
+    review_button_click(configuration.email_before_submit,driver)
+    print(driver.find_element(By.ID, 'email2').get_attribute("value"))
 
 main()    
