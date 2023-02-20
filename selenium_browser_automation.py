@@ -5,9 +5,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
 import configuration
 import prepare_data
-
+import time
 
 def initialise():
     options = Options()
@@ -81,7 +85,8 @@ def fill_out_enter_prescription(enter_prescription,driver):
     rx_side=enter_prescription.get('form_rxside')
     form_rxside=driver.find_element(By.ID, "form_rxside")
     if form_rxside:
-            form_rxside.send_keys(enter_prescription.get('form_rxside'))  
+            form_rxside.send_keys(enter_prescription.get('form_rxside'))
+            
        
     if rx_side=="Right Eye only":
         right_eye_data=enter_prescription.get('right_eye')
@@ -98,25 +103,41 @@ def fill_out_enter_prescription(enter_prescription,driver):
         fill_left_eye(left_eye_data,driver)
             
 def fill_right_eye(right_eye_data , driver):
-
-     for key ,value in right_eye_data.items():
-        print("key" , key , "value", value)
+    
+    for key ,value in right_eye_data.items():
+        # driver.implicitly_wait(10)
+        # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, key)))
+        # element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, key)))
         form_rkey=driver.find_element(By.ID, key)
-        if form_rkey and value is not None:
-            form_rkey.send_keys(value)          
-        else:
-            print("field not found")
+        next=isDisabled(driver,form_rkey)
+        # driver.implicitly_wait(10)
+        # dropdown_menu_1 = Select(driver.find_element(By.ID, key)) 
+        # dropdown_menu_1.select_by_index(1)
+        if next:
+            if form_rkey and value is not None:
+                form_rkey.send_keys(value)    
+            else:
+                print("field not found")
 
 def fill_left_eye(left_eye_data,driver):
 
     for key ,value in left_eye_data.items():
         form_lkey=driver.find_element(By.ID, key)
-        print("key" , key , "value", value)
-        if form_lkey and value is not None:
-            form_lkey.send_keys(value)
-        else:
-            print("field not found")    
-    
+        next=isDisabled(driver,form_lkey)
+        if next:
+            if form_lkey and value is not None:
+                form_lkey.send_keys(value)
+            else:
+                print("field not found")    
+
+def isDisabled(driver, elem): 
+    try: 
+        wait = WebDriverWait(driver, 2) 
+        wait.until(EC.element_to_be_clickable(elem)) 
+        return True 
+    except Exception as e: 
+        return False  
+
 def fill_out_frame_data(frame_data,driver):
     
     for key ,value in frame_data.items():
@@ -170,15 +191,12 @@ def fill_uncoated_info(uncoated_info,driver):
     # problem here
     for key,value in uncoated_info.items():
         form_skey=driver.find_element(By.ID, key)
-    
-        if key == "form_uncoat" and value=="no":
-            return
-        elif key == "form_uncoat" and value=="yes":
-            if form_skey:
+        if key != "form_uncoat":
+            next=isDisabled(driver, form_skey)
+            if next and form_skey:   
                 form_skey.send_keys(value)
-        elif key != "form_uncoat" and uncoated_info.get('form_uncoat')=="no":  
-            if form_skey:
-                form_skey.send_keys(value)
+            else:
+                print("skip this" , key , "field" )
 
 def fill_mirror_info(form_mirror_info,driver):
     if form_mirror_info.get('form_mirror') == "yes" :
@@ -195,11 +213,14 @@ def fill_mirror_info(form_mirror_info,driver):
            form_mirror_grade.send_keys(form_mirror_info.get('form_mirror_grade'))
 
 def fill_out_comments(comment,driver):
-     for key ,value in comment.items():
+
+    for key ,value in comment.items():
         form_skey=driver.find_element(By.NAME, key)
         if form_skey:
             form_skey.send_keys(value)
-
+            
+        
+          
 
 def review_button_click(email,driver):
     review_button=driver.find_element(By.ID,'prview_button3')
@@ -223,12 +244,13 @@ def add_button_click(driver):
 
 def main():
     
-    prepare_data.fetch_data()     
+    prepare_data.fetch_data()
+
     driver=initialise()
-    login(driver)
-    go_to_lab_job(driver)
-    print("---------------------")
-    print(prepare_data.enter_prescription)
+    if driver:
+        login(driver)
+        go_to_lab_job(driver)
+    
     fill_out_patient_information(prepare_data.patient_information , driver)
     fill_out_prescription_type(prepare_data.prescription_type,driver)
     fill_out_enter_prescription(prepare_data.enter_prescription,driver)

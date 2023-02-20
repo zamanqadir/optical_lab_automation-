@@ -46,7 +46,7 @@ enter_prescription={
     }
 frame_data={
         "form_supply_frame": "",
-        "form_later_frame" : "Frame to Come",
+        "form_later_frame" : "yes",
         "form_uncut_frame" : "",
         "Frame_Options" : "Zyl Edge",
         "form_enclosed" :"False",
@@ -75,13 +75,13 @@ lens_material={
        "form_156_blue":"",
        "form_167_blue" :"",
        "form_156_blue": "",
-       "form_polycarbonate" :"",
+       "form_polycarbonate" :"yes",
        "form_polycarbonate_blue": ""
     }
 lens_colors_coatings={
         "uncoated":{
-        "form_uncoat" : "",
-        "form_ar": "",
+        "form_uncoat" : "yes",
+        "form_ar": "Sapphire AR",
         "form_photochromic": "",
         "form_tint_first" : "",
         "form_tint_color" : "",
@@ -90,13 +90,13 @@ lens_colors_coatings={
         "form_ar_side": "",
         "form_scratch_coat" : ""},
         "form_mirror_info":{
-            "form_mirror" : "",
+           "form_mirror" : "",
            "form_mirror_color": "",
            "form_mirror_grade": "",
         }
     }
 comment={
-        "comment": ""
+        "comments": ""
     }
 
 def fetch_data():
@@ -136,16 +136,16 @@ def prepar_dict(requested_data):
             elif key =="OS - PD (Near)":
                 enter_prescription.get("left_eye")["form_near_lt"]=value
             elif key =="Model":
-                enter_prescription["form_frame_model"]=value    
+                frames_catalog_data["form_frame_model"]=value    
             elif key =="Color":
-                enter_prescription["form_frame_color"]=value 
+                frames_catalog_data["form_frame_color"]=value 
             elif key =="Frame Size - A":
-                enter_prescription["form_eye_size_a"]=value
+                frames_catalog_data["form_eye_size_a"]=value
             elif key =="Frame Size - B":
-                enter_prescription["form_eye_size_b"]=value    
-            elif key =="DBL":
-                enter_prescription["form_frame_dbl"]=value 
-            elif key =="ED":
-                enter_prescription["form_frame_ed"]=value
+                frames_catalog_data["form_eye_size_b"]=value    
+            elif key =="Frame Size - DBL":
+                frames_catalog_data["form_frame_dbl"]=value 
+            elif key =="Frame Size - ED":
+                frames_catalog_data["form_frame_ed"]=value
             elif key =="Notes":
-                comment["comment"]=value        
+                comment["comments"]=value        

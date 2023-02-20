@@ -52,8 +52,7 @@ def readDatabase(headers):
                     elif value.get("type")=="status" and value.get("status") is not None:
                         user_data[key]=value.get("status").get("name")
                     elif value.get("type")=="url" and value.get("url") is not None:
-                        user_data[key]=value.get("url")   
-                print(user_data)  
+                        user_data[key]=value.get("url")     
                 users_data.append(user_data) 
         
     return  users_data
