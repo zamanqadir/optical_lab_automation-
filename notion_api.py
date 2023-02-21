@@ -1,6 +1,7 @@
 import requests,json
 from datetime import date
 import configuration
+import uuid  
  
 headers = {
        "Authorization": "Bearer " + configuration.notion_token,
@@ -12,15 +13,13 @@ headers = {
 def readDatabase(headers):
     
     readUrl = f"https://api.notion.com/v1/databases/{configuration.databaseId}/query"
-     
+    
     res = requests.request("POST", readUrl, headers=headers)
     data = res.json()
-
     # DS return users_data=[
     # user_data={
     # keys:values}]
     users_data=[]
-   
     records=data["results"]
     today = date.today()
   
@@ -59,6 +58,7 @@ def readDatabase(headers):
 
 def get_data():
     form_data=readDatabase(headers)
+    print(form_data)
     return form_data 
 
 # get_data()

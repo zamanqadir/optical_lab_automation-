@@ -111,26 +111,55 @@ def fetch_data():
 def prepar_dict(requested_data):
     for request in requested_data:
         for key ,value in request.items():
-            if key =="client_name":
+            if key =="Client Name":
                 patient_information["form_name"]=value
             elif key =="Lens Type":
-                prescription_type["form_single_vision"]=value
+                if value=="Single Vision":
+                    prescription_type["form_single_vision"]="KM HD SV"
             elif key =="OD - SPH":
-                enter_prescription.get("right_eye")["form_sph_rt"]=value 
+                if float(value) < 0.0: 
+                    enter_prescription.get("right_eye")["form_sph_rt"]="-"+value
+                elif float(value) > 0.0: 
+                    enter_prescription.get("right_eye")["form_sph_rt"]="+"+value 
+                else: 
+                    enter_prescription.get("right_eye")["form_sph_rt"]=value      
             elif key =="OD - CYL":
-                enter_prescription.get("right_eye")["form_cyl_rt"]=value 
+                if float(value) < 0.0: 
+                    enter_prescription.get("right_eye")["form_cyl_rt"]="-"+value
+                elif float(value) > 0.0: 
+                    enter_prescription.get("right_eye")["form_cyl_rt"]="+"+value
+                else: 
+                    enter_prescription.get("right_eye")["form_cyl_rt"]=value
             elif key =="OD - Axis":
-                enter_prescription.get("right_eye")["form_axis_rt"]=value    
+                if int(value[1:]) < 100:
+                    value=str(int(value[1:])+1)
+                enter_prescription.get("right_eye")["form_axis_rt"]=value       
             elif key =="OD - PD (Distance)":
                 enter_prescription.get("right_eye")["form_far_rt"]=value 
             elif key =="OD - PD (Near)":
                 enter_prescription.get("right_eye")["form_near_rt"]=value     
             elif key =="OS - SPH":
-                enter_prescription.get("left_eye")["form_sph_lt"]=value   
+                if float(value) < 0.0: 
+                    enter_prescription.get("left_eye")["form_sph_lt"]="-"+value 
+                elif float(value) > 0.0: 
+                    enter_prescription.get("left_eye")["form_sph_lt"]="+"+value 
+                else: 
+                    enter_prescription.get("left_eye")["form_sph_lt"]=value 
             elif key =="OS - CYL":
-                enter_prescription.get("left_eye")["form_cyl_lt"]=value 
+                if float(value) < 0.0: 
+                    enter_prescription.get("left_eye")["form_cyl_lt"]="-"+value  
+                elif float(value) > 0.0: 
+                    enter_prescription.get("left_eye")["form_cyl_lt"]="+"+value  
+                else: 
+                    enter_prescription.get("left_eye")["form_cyl_lt"]=value 
             elif key =="OS - Axis":
-                enter_prescription.get("left_eye")["form_axis_lt"]=value    
+                if int(value[1:]) < 100:
+                    value=str(int(value[1:])+1)
+                enter_prescription.get("left_eye")["form_axis_lt"]=value
+            elif key =="OS - Axis":
+                if int(value[1:]) < 100:
+                    value=str(int(value[1:])+1)
+                enter_prescription.get("left_eye")["form_add_lt"]=value        
             elif key =="OS - PD (Distance)":
                 enter_prescription.get("left_eye")["form_far_lt"]=value 
             elif key =="OS - PD (Near)":

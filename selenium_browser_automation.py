@@ -4,7 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
@@ -16,7 +15,7 @@ import time
 def initialise():
     options = Options()
     options.add_experimental_option("detach" , True)
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
     driver.get(configuration.initial_link)
     driver.maximize_window()
@@ -111,9 +110,6 @@ def fill_right_eye(right_eye_data , driver):
         # element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, key)))
         form_rkey=driver.find_element(By.ID, key)
         next=isDisabled(driver,form_rkey)
-        # driver.implicitly_wait(10)
-        # dropdown_menu_1 = Select(driver.find_element(By.ID, key)) 
-        # dropdown_menu_1.select_by_index(1)
         if next:
             if form_rkey and value is not None:
                 form_rkey.send_keys(value)    
@@ -220,9 +216,6 @@ def fill_out_comments(comment,driver):
         if form_skey:
             form_skey.send_keys(value)
             
-        
-          
-
 def review_button_click(email,driver):
     review_button=driver.find_element(By.ID,'prview_button3')
     if review_button:
@@ -232,14 +225,22 @@ def review_button_click(email,driver):
 def fill_out_email(email ,driver):
      email_field=driver.find_element(By.ID, 'email2')
      if email_field:
-         email_field.send_keys(email)
+        email_field.send_keys(email)
+        take_ss_Ordering_form(driver)
         #  add_button_click(driver)
+
+def take_ss_Ordering_form(driver):
+    ss_name=driver.find_element(By.ID, "form_name").get_attribute('value')
+    S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+    driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment                                                                                                                
+    driver.find_element(By.TAG_NAME ,'form').screenshot(f"{ss_name}.png")
+     
 
 def add_button_click(driver):
     email=driver.find_element(By.ID, 'email2').get_attribute("value")
     add_button=driver.find_element(By.ID,'order_submit')
+    
     if email and add_button:
-        driver.stop()
         add_button.click()
     
 
@@ -263,6 +264,6 @@ def main():
     fill_out_comments(prepare_data.comment,driver)
     
     review_button_click(configuration.email_before_submit,driver)
-    print(driver.find_element(By.ID, 'email2').get_attribute("value"))
+    # print(driver.find_element(By.ID, 'email2').get_attribute("value"))
 
 main()    
